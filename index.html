@@ -5,24 +5,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+  <!-- Icons -->
   <link rel="shortcut icon" type="image/png" href="/img/icon.png" />
-
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
-
+  <!-- CSS Style-Sheets -->
   <link rel="stylesheet" href="style.css" />
+  <!-- Leaflet Library -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  <script defer src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin="">
     </script>
-  <script defer src="script.js"></script>
-  <title>mapty // Map your workouts</title>
+  <!-- Main Scripts -->
+  <script defer src="/js/script.js"></script>
+  <!-- Title -->
+  <title>Mapty // Map your workouts</title>
 </head>
 
 <body>
-  <div class="sidebar">
+  <aside class="sidebar">
     <img src="/img/logo.png" alt="Logo" class="logo" />
 
     <ul class="workouts">
@@ -108,9 +113,9 @@
       learning or your portfolio. Don't use to teach. Don't claim
       as your own.
     </p>
-  </div>
+  </aside>
 
-  <div id="map"></div>
+  <main id="map"></main>
 </body>
 
 </html>
