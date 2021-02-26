@@ -309,6 +309,7 @@ class App {
             this._renderWorkout(work)
         })
     }
+
     reset() {
         localStorage.removeItem(`workouts`)
         location.reload()
@@ -316,6 +317,4 @@ class App {
 
 }
 
-
 const app = new App()
-
