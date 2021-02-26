@@ -73,12 +73,14 @@ class App {
 
     constructor() {
         // Constructor loads when the page loads. 
-        // Execute methods within the constructor class.
-        // Avoid executing class methods outside of class.
 
-        // Find Position
+        // Find user position
         this._getPosition()
-        // Add new Workout. Bind the class`s (App) keyword `this`
+
+        // Get data from local storage
+        this._getLocalStorage()
+
+        // Add new Workout. Bind the class App`s keyword `this`
         form.addEventListener(`submit`, this._newWorkout.bind(this))
         // Swap between the inputs Elevation & Candence
         inputType.addEventListener('change', this._toggleElevationField)
@@ -86,6 +88,7 @@ class App {
         containerWorkouts.addEventListener(`click`, this._moveToPopup.bind(this))
     }
 
+    // Gets User's Position
     _getPosition() {
         if (navigator.geolocation)
             navigator.geolocation.getCurrentPosition(
@@ -96,8 +99,9 @@ class App {
             );
     }
 
+    // Loads map with Leaflet API
     _loadMap(position) {
-        // Locate the coordinates
+        // Finds the coordinates
         const { latitude } = position.coords
         const { longitude } = position.coords
         console.log(`https://www.google.com/maps/@${latitude},${longitude}`)
@@ -115,24 +119,31 @@ class App {
 
         // Handling clicks on map
         this.#map.on('click', this._showForm.bind(this));
+
+        // Renders saved workout markers 
+        this.#workouts.forEach(work => {
+            this._renderWorkoutMarker(work)
+        })
+
     }
 
+    // Reveals form
     _showForm(mapE) {
         this.#mapEvent = mapE
         form.classList.remove(`hidden`)
         inputDistance.focus()
     }
 
+    // Empty inputs + Hides form
     _hideForm() {
-        // Empty inputs
         inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = ''
         form.style.display = `none`
         form.classList.add(`hidden`)
         setTimeout(() => (form.style.display = `grid`), 1000)
     }
 
+    // Swaps between the Elevation & Cadence inputs
     _toggleElevationField() {
-        // Toggle between the Elevation & Cadence fields
         inputElevation
             .closest(`.form__row`)
             .classList.toggle(`form__row--hidden`)
@@ -141,6 +152,7 @@ class App {
             .classList.toggle(`form__row--hidden`)
     }
 
+    // Main method - creates workout
     _newWorkout(e) {
         const validInputs = (...inputs) =>
             inputs.every(inp =>
@@ -190,8 +202,12 @@ class App {
 
         // Hide form + Clear input fields
         this._hideForm()
+
+        // Set local storage to all workouts
+        this._setLocalStorage()
     }
 
+    // Render Leaflet based map marker
     _renderWorkoutMarker(workout) {
         L.marker(workout.coords)
             .addTo(this.#map)
@@ -210,6 +226,7 @@ class App {
             .openPopup();
     }
 
+    // Render workout using Template literals and HTML
     _renderWorkout(workout) {
         let html = `
           <li class="workout workout--${workout.type}" data-id="${workout.id}">
@@ -260,16 +277,15 @@ class App {
         form.insertAdjacentHTML('afterend', html);
     }
 
+    // Drifts map over to the selected workout
     _moveToPopup(e) {
         const workoutEl = e.target.closest(`.workout`)
-        // console.log(workoutEl)
 
         if (!workoutEl) return;
 
         const workout = this.#workouts.find(
             work => work.id === workoutEl.dataset.id
         )
-        // console.log(workout)
 
         this.#map.setView(workout.coords, this.#mapZoomLevel, {
             animate: true,
@@ -278,6 +294,26 @@ class App {
             }
         })
     }
+
+    _setLocalStorage() {
+        localStorage.setItem(`workouts`, JSON.stringify(this.#workouts))
+    }
+
+    _getLocalStorage() {
+        const data = JSON.parse(localStorage.getItem(`workouts`))
+
+        if (!data) return
+
+        this.#workouts = data
+        this.#workouts.forEach(work => {
+            this._renderWorkout(work)
+        })
+    }
+    reset() {
+        localStorage.removeItem(`workouts`)
+        location.reload()
+    }
+
 }
 
 
