@@ -67,6 +67,7 @@ const inputElevation = document.querySelector('.form__input--elevation');
 
 class App {
     #map
+    #mapZoomLevel = 13
     #mapEvent
     #workouts = []
 
@@ -81,6 +82,8 @@ class App {
         form.addEventListener(`submit`, this._newWorkout.bind(this))
         // Swap between the inputs Elevation & Candence
         inputType.addEventListener('change', this._toggleElevationField)
+        // Moves map to the selected marker`s position
+        containerWorkouts.addEventListener(`click`, this._moveToPopup.bind(this))
     }
 
     _getPosition() {
@@ -103,7 +106,7 @@ class App {
         const coords = [latitude, longitude]
 
         // Places the coordinates within the map
-        this.#map = L.map('map').setView(coords, 13);
+        this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
 
         // Displays the map (via Leaflet API)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -125,7 +128,7 @@ class App {
         inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = ''
         form.style.display = `none`
         form.classList.add(`hidden`)
-        setTimeout(() = (form.style.display = `grid`), 1000)
+        setTimeout(() => (form.style.display = `grid`), 1000)
     }
 
     _toggleElevationField() {
@@ -257,6 +260,24 @@ class App {
         form.insertAdjacentHTML('afterend', html);
     }
 
+    _moveToPopup(e) {
+        const workoutEl = e.target.closest(`.workout`)
+        // console.log(workoutEl)
+
+        if (!workoutEl) return;
+
+        const workout = this.#workouts.find(
+            work => work.id === workoutEl.dataset.id
+        )
+        // console.log(workout)
+
+        this.#map.setView(workout.coords, this.#mapZoomLevel, {
+            animate: true,
+            pan: {
+                duration: 1,
+            }
+        })
+    }
 }
 
 
