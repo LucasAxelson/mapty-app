@@ -10,7 +10,7 @@
  * Ability to <b>sort</b> workouts by a certain field (e.g. distance)
  * <b>Re-build</b> Running & Cycling objects exiting local storage
  * More realistic error and confirmation <b>messages</b> 
- *  Ability to position the map to show all workouts [very hard]
+ * Ability to position the map to show all workouts [very hard]
  * Ability to <b>draw lines and shapes</b> instead of just points [very hard]
  * <b>Geocode</b> location from coordinates ("Run in Faro, Portugal") [ASYNC JS]
- * <b>Display weather data<b> for workout time and place [ASYNC JS]
+ * <b>Display weather data</b> for workout time and place [ASYNC JS]

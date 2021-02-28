@@ -51,10 +51,6 @@ class Cycling extends Workout {
     }
 }
 
-// const run1 = new Running([39, -12], 5.2, 24, 178)
-// const cycling1 = new Cycling([39, -12], 27, 95, 523)
-// console.log(run1)
-
 ///////////////////////////////
 // APPLICATION ARCHITECTURE
 const form = document.querySelector('.form');
@@ -76,10 +72,8 @@ class App {
 
         // Find user position
         this._getPosition()
-
         // Get data from local storage
         this._getLocalStorage()
-
         // Add new Workout. Bind the class App`s keyword `this`
         form.addEventListener(`submit`, this._newWorkout.bind(this))
         // Swap between the inputs Elevation & Candence
@@ -124,7 +118,6 @@ class App {
         this.#workouts.forEach(work => {
             this._renderWorkoutMarker(work)
         })
-
     }
 
     // Reveals form
@@ -205,6 +198,12 @@ class App {
 
         // Set local storage to all workouts
         this._setLocalStorage()
+
+    }
+
+    // Deletes Workout
+    _deleteWorkout(workout) {
+        console.log(workout.path)
     }
 
     // Render Leaflet based map marker
@@ -231,6 +230,8 @@ class App {
         let html = `
           <li class="workout workout--${workout.type}" data-id="${workout.id}">
             <h2 class="workout__title">${workout.description}</h2>
+            <button class="workout_delete">X</button>
+
             <div class="workout__details">
               <span class="workout__icon">${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'
             }</span>
@@ -300,11 +301,11 @@ class App {
     }
 
     _getLocalStorage() {
-        const data = JSON.parse(localStorage.getItem(`workouts`))
+        const localData = JSON.parse(localStorage.getItem(`workouts`))
 
-        if (!data) return
+        if (!localData) return
 
-        this.#workouts = data
+        this.#workouts = localData
         this.#workouts.forEach(work => {
             this._renderWorkout(work)
         })
