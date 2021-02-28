@@ -42,33 +42,6 @@ a:visited {
   color: var(--color-brand--1);
 }
 
-/* 3RD PARTY X BUTTON */
-
-.mdivFirst {
-
-  margin-left: 8rem;
-  background-color: var(--color-dark--2);
-  border: 1px solid black;
-}
-
-.mdiv {
-  margin-left: 1rem;
-
-  height: 20px;
-  width: 2px;
-  background-color: black;
-  transform: rotate(45deg);
-  Z-index: 1;
-}
-
-.md {
-  height: 20px;
-  width: 2px;
-  background-color: black;
-  transform: rotate(90deg);
-  Z-index: 1;
-}
-
 /* SIDEBAR */
 .sidebar {
   flex-basis: 50rem;
