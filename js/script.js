@@ -80,6 +80,11 @@ class App {
         inputType.addEventListener('change', this._toggleElevationField)
         // Moves map to the selected marker`s position
         containerWorkouts.addEventListener(`click`, this._moveToPopup.bind(this))
+        // Deletes Workout
+        const deleteBtn = document.querySelectorAll('.workout_delete');
+        for (let i = 0; i < deleteBtn.length; i++) {
+            deleteBtn[i].addEventListener('click', this._deleteWorkout.bind(this))
+        }
     }
 
     // Gets User's Position
@@ -202,8 +207,8 @@ class App {
     }
 
     // Deletes Workout
-    _deleteWorkout(workout) {
-        console.log(workout.path)
+    deleteWorkout(workout) {
+        console.log(workout)
     }
 
     // Render Leaflet based map marker
