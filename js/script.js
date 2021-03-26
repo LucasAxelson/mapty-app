@@ -62,6 +62,10 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+const btnClear = document.querySelector(`.btn__clearAll`);
+const btnPositive = document.querySelector(`.btn__clear--positive`);
+const btnNegative = document.querySelector(`.btn__clear--negative`);
+const alertMessage = document.querySelector(`.alert-message`);
 
 class App {
   #map;
@@ -84,7 +88,11 @@ class App {
     containerWorkouts.addEventListener(`click`, this._moveToPopup.bind(this));
     // Deletes Workout
     const deleteBtn = document.querySelectorAll('.workout__delete');
-    deleteBtn.forEach(btn => btn.addEventListener(`click`, this.deleteWorkout));
+    deleteBtn.forEach(btn =>
+      btn.addEventListener(`click`, this._deleteWorkout)
+    );
+    // Deletes all Workouts
+    btnClear.addEventListener(`click`, this.renderAlert.bind(this));
   }
 
   // Gets User's Position
@@ -205,10 +213,32 @@ class App {
   }
 
   // Deletes Workout
-  deleteWorkout(e) {
-    const target = e.target.parentNode;
-    target.remove();
+  _deleteWorkout(e) {
+    let target = e.target.parentNode;
+    // this._renderAlert();
+
+    // target = target.outerHTML
     console.log(target);
+    console.log(localStorage.workouts);
+    // Transform workout-li into one long string and save to variable.
+    // Access localStorage - Data is saved in one large string.
+    // Verify if localStorage string contains the workout-li string.
+    // If so, delete the string from the localStorage.
+    // If not, close alert message. (Guard clause)
+    // Verify if modified data is being utilized upon reloading page.
+
+    // workout = new Running([lat, lng], distance, duration, cadence);
+  }
+
+  renderAlert() {
+    // Add alert message and remove the clear all button
+    alertMessage.classList.add(`alert-message--active`);
+    btnClear.style.display = `none`;
+    // Add event listener to both buttons
+    btnNegative.addEventListener(`click`, () => {
+      alertMessage.classList.remove(`alert-message--active`);
+      btnClear.style.display = `unset`;
+    });
   }
 
   // Render Leaflet based map marker
@@ -317,7 +347,7 @@ class App {
     });
   }
 
-  reset() {
+  _clearAll() {
     localStorage.removeItem(`workouts`);
     location.reload();
   }
