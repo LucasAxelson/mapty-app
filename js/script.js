@@ -87,12 +87,12 @@ class App {
     // Moves map to the selected marker`s position
     containerWorkouts.addEventListener(`click`, this._moveToPopup.bind(this));
     // Deletes Workout
-    const deleteBtn = document.querySelectorAll('.workout__delete');
-    deleteBtn.forEach(btn =>
-      btn.addEventListener(`click`, this._deleteWorkout)
+    const btnDelete = document.querySelectorAll('.workout__delete');
+    btnDelete.forEach(btn =>
+      btn.addEventListener(`click`, this._deleteWorkout.bind(this))
     );
     // Deletes all Workouts
-    btnClear.addEventListener(`click`, this.renderAlert.bind(this));
+    btnClear.addEventListener(`click`, this._renderAlert.bind(this));
   }
 
   // Gets User's Position
@@ -214,21 +214,35 @@ class App {
 
   // Deletes Workout
   _deleteWorkout(e) {
+    // Select workout & it's ID
     let target = e.target.parentNode;
+    let id = target.dataset.id;
+    let element; // Workout to be deleted
+
+    // Looks through each of the workouts for matching IDs
+    let list = this.#workouts;
+    list.forEach(workout => {
+      let listId = workout.id;
+      if (listId === id) {
+        element = workout;
+      }
+    }); // Locates workout to be deleted and fills the element variable
+
+    // Locates workout within Storage
+    const isElement = sample => sample == element; // findIndex Condition
+    const index = list.findIndex(isElement); // Locate index of workout
+    this.#workouts.splice(index, 1); // Delete workout
+
+    this._setLocalStorage(); // Save deletion
+    location.reload(); // Reload page
+
     // this._renderAlert();
 
-    // target = target.outerHTML
-    console.log(target);
-    console.log(localStorage.workouts);
-
-    // Delete the workout by removing the li, like was done in a prior commit.
-    // The commit that appeared to be functional, but wasn`t saving upon reload.
-    // As soon as a deletion occurs, use the set storage method to take a "snapshot" of the workouts.
-    // Then save the snapshot to the storage. In short:
-    // Delete workout, then immediately save the new version to local storage.
+    // Render the alert, as to avoid accidental deletions
   }
 
-  renderAlert(e) {
+  // Render the delete workout alert
+  _renderAlert(e) {
     // Render an alert in accordance with the amount of workouts to be deleted.
     let target = e.target;
     let paragraph = alertMessage.children;
