@@ -65,7 +65,7 @@ const inputElevation = document.querySelector('.form__input--elevation');
 const btnClear = document.querySelector(`.btn__clearAll`);
 const btnPositive = document.querySelector(`.btn--positive`);
 const btnNegative = document.querySelector(`.btn--negative`);
-const alertMessage = document.querySelector(`.alert-message`);
+const alertMessage = document.querySelector(`.alert--deletion`);
 
 class App {
   #map;
@@ -220,27 +220,33 @@ class App {
     // target = target.outerHTML
     console.log(target);
     console.log(localStorage.workouts);
-    // Transform workout-li into one long string and save to variable.
-    // Access localStorage - Data is saved in one large string.
-    // Verify if localStorage string contains the workout-li string.
-    // If so, delete the string from the localStorage.
-    // If not, close alert message. (Guard clause)
-    // Verify if modified data is being utilized upon reloading page.
 
-    // workout = new Running([lat, lng], distance, duration, cadence);
+    // Delete the workout by removing the li, like was done in a prior commit.
+    // The commit that appeared to be functional, but wasn`t saving upon reload.
+    // As soon as a deletion occurs, use the set storage method to take a "snapshot" of the workouts.
+    // Then save the snapshot to the storage. In short:
+    // Delete workout, then immediately save the new version to local storage.
   }
 
-  renderAlert() {
+  renderAlert(e) {
+    // Render an alert in accordance with the amount of workouts to be deleted.
+    let target = e.target;
+    let paragraph = alertMessage.children;
+    if (target.classList.contains(`btn__clearAll`)) {
+      paragraph[0].innerText = `Are you sure you want to delete all your workouts?`;
+    } else {
+      paragraph[0].innerText = `Are you sure you want to delete this workout?`;
+    }
     // Add alert message and remove the clear all button
-    alertMessage.classList.add(`alert-message--active`);
+    alertMessage.classList.add(`alert--deletion--active`);
     btnClear.style.display = `none`;
     // If btn-Negative, remove the alert and add back the Clear All btn.
     btnNegative.addEventListener(`click`, () => {
-      alertMessage.classList.remove(`alert-message--active`);
+      alertMessage.classList.remove(`alert--deletion--active`);
       btnClear.style.display = `unset`;
     });
     btnPositive.addEventListener(`click`, () => {
-      alertMessage.classList.remove(`alert-message--active`);
+      alertMessage.classList.remove(`alert--deletion--active`);
       btnClear.style.display = `unset`;
       this._clearAll();
     });
