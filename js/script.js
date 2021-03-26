@@ -63,8 +63,8 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 const btnClear = document.querySelector(`.btn__clearAll`);
-const btnPositive = document.querySelector(`.btn__clear--positive`);
-const btnNegative = document.querySelector(`.btn__clear--negative`);
+const btnPositive = document.querySelector(`.btn--positive`);
+const btnNegative = document.querySelector(`.btn--negative`);
 const alertMessage = document.querySelector(`.alert-message`);
 
 class App {
@@ -234,10 +234,15 @@ class App {
     // Add alert message and remove the clear all button
     alertMessage.classList.add(`alert-message--active`);
     btnClear.style.display = `none`;
-    // Add event listener to both buttons
+    // If btn-Negative, remove the alert and add back the Clear All btn.
     btnNegative.addEventListener(`click`, () => {
       alertMessage.classList.remove(`alert-message--active`);
       btnClear.style.display = `unset`;
+    });
+    btnPositive.addEventListener(`click`, () => {
+      alertMessage.classList.remove(`alert-message--active`);
+      btnClear.style.display = `unset`;
+      this._clearAll();
     });
   }
 

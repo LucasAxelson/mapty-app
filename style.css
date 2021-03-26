@@ -187,7 +187,7 @@ a:visited {
 }
 
 .copyright {
-  margin-top: 2rem;
+  margin-top: 1rem;
   font-size: 1.3rem;
   text-align: center;
   color: var(--color-light--1);
@@ -207,7 +207,6 @@ a:visited {
 /* Alert Message */
 .alert-message {
   display: none;
-
   border: 3px solid var(--color-brand--2);
   border-radius: 8px;
 
@@ -218,53 +217,26 @@ a:visited {
   margin: 1rem 0;
 }
 
-.alert-message--active {
-  display: unset;
-}
-
-.alert-message button {
-  outline: none;
-  width: 45%;
-  padding: 0.35rem;
-
-  font-family: 'Manrope', sans-serif;
-  font-size: 1.75rem;
-  font-weight: 700;
-
-  background: var(--color-brand--2);
-  color: rgb(217, 235, 238);
-  border: 3px solid rgb(217, 235, 238);
-  border-radius: 8px;
-}
-
-.alert-message button:last-child {
-  margin-left: 7.5%;
-}
-
-.alert-message button:hover {
-  background: rgb(217, 235, 238);
-  border: 3px solid var(--color-brand--2);
-  color: black;
-
-  transition: 0.3s;
-}
-
-.alert-message button:active {
-  transition: 0;
-  box-shadow: 2px 2px 2px 0 grey, 2.5px 2.5px 2.5px 0 black;
-}
-
 .alert-message p {
   margin-bottom: 2rem;
 }
 
-/* Clear All Button */
-.btn__clearAll {
-  outline: none;
-  width: 100%;
-  padding: 0.35rem;
-  margin: 1rem;
+.alert-message--active {
+  display: unset;
+}
 
+.btn__alert {
+  width: 45%;
+  padding: 0.35rem;
+}
+
+.btn__alert:last-child {
+  margin-left: 7.5%;
+}
+
+/* Clear All Button */
+.btn__clear {
+  outline: none;
   font-family: 'Manrope', sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
@@ -275,11 +247,16 @@ a:visited {
   border-radius: 8px;
 }
 
+.btn__clearAll {
+  width: 100%;
+  padding: 0.35rem;
+}
+
 .btn__clearAll--hidden {
   display: none;
 }
 
-.btn__clearAll:hover {
+.btn__clear:hover {
   background: rgb(217, 235, 238);
   border: 3px solid var(--color-brand--2);
   color: black;
@@ -287,7 +264,7 @@ a:visited {
   transition: 0.3s;
 }
 
-.btn__clearAll:active {
+.btn__clear:active {
   transition: 0;
   box-shadow: 2px 2px 2px 0 grey, 2.5px 2.5px 2.5px 0 black;
 }
