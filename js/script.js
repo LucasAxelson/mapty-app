@@ -92,7 +92,7 @@ class App {
       btn.addEventListener(`click`, this._deleteWorkout.bind(this))
     );
     // Deletes all Workouts
-    btnClear.addEventListener(`click`, this._renderAlert.bind(this));
+    btnClear.addEventListener(`click`, this._deleteAll.bind(this));
   }
 
   // Gets User's Position
@@ -212,6 +212,17 @@ class App {
     this._setLocalStorage();
   }
 
+  // Deletes all workouts
+  _deleteAll() {
+    this._renderAlert();
+    let paragraph = alertMessage.children;
+    paragraph[0].innerText = `Are you sure you want to delete all your workouts?`;
+
+    btnPositive.addEventListener(`click`, () => {
+      this._clearAll();
+    });
+  }
+
   // Deletes Workout
   _deleteWorkout(e) {
     // Select workout & it's ID
@@ -231,26 +242,20 @@ class App {
     // Locates workout within Storage
     const isElement = sample => sample == element; // findIndex Condition
     const index = list.findIndex(isElement); // Locate index of workout
-    this.#workouts.splice(index, 1); // Delete workout
 
-    this._setLocalStorage(); // Save deletion
-    location.reload(); // Reload page
+    this._renderAlert();
+    let paragraph = alertMessage.children;
+    paragraph[0].innerText = `Are you sure you want to delete this workout?`;
 
-    // this._renderAlert();
-
-    // Render the alert, as to avoid accidental deletions
+    btnPositive.addEventListener(`click`, () => {
+      this.#workouts.splice(index, 1); // Delete workout
+      this._setLocalStorage(); // Save deletion
+      location.reload(); // Reload page
+    });
   }
 
   // Render the delete workout alert
-  _renderAlert(e) {
-    // Render an alert in accordance with the amount of workouts to be deleted.
-    let target = e.target;
-    let paragraph = alertMessage.children;
-    if (target.classList.contains(`btn__clearAll`)) {
-      paragraph[0].innerText = `Are you sure you want to delete all your workouts?`;
-    } else {
-      paragraph[0].innerText = `Are you sure you want to delete this workout?`;
-    }
+  _renderAlert() {
     // Add alert message and remove the clear all button
     alertMessage.classList.add(`alert--deletion--active`);
     btnClear.style.display = `none`;
@@ -258,11 +263,12 @@ class App {
     btnNegative.addEventListener(`click`, () => {
       alertMessage.classList.remove(`alert--deletion--active`);
       btnClear.style.display = `unset`;
+      return false;
     });
     btnPositive.addEventListener(`click`, () => {
       alertMessage.classList.remove(`alert--deletion--active`);
       btnClear.style.display = `unset`;
-      this._clearAll();
+      return true;
     });
   }
 

@@ -9,6 +9,7 @@
   --color-light--1: #aaa;
   --color-light--2: #ececec;
   --color-light--3: rgb(214, 222, 224);
+  --color-light--4: rgb(217, 235, 238);
 }
 
 * {
@@ -242,13 +243,14 @@ a:visited {
   font-weight: 700;
 
   background: var(--color-brand--2);
-  color: rgb(217, 235, 238);
-  border: 3px solid rgb(217, 235, 238);
+  color: var(--color-light--4);
+  border: 3px solid var(--color-light--4);
   border-radius: 8px;
 }
 
 .btn__clearAll {
   width: 100%;
+  margin-top: 1.5rem;
   padding: 0.35rem;
 }
 
@@ -257,7 +259,7 @@ a:visited {
 }
 
 .btn__clear:hover {
-  background: rgb(217, 235, 238);
+  background: var(--color-light--4);
   border: 3px solid var(--color-brand--2);
   color: black;
 
