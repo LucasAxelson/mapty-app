@@ -198,6 +198,7 @@ class App {
 
     // Add related object to Workout array
     this.#workouts.push(workout);
+    location.reload(); // Reload page to save workout
 
     // Render workout on map as marker
     this._renderWorkoutMarker(workout);
