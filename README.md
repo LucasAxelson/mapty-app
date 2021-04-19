@@ -20,3 +20,6 @@ Future functionalities: <br>
 - Ability to <b>draw lines and shapes</b> instead of just points [very hard]
 - <b>Geocode</b> location from coordinates ("Run in Faro, Portugal") [ASYNC JS]
 - <b>Display weather data</b> for workout time and place [ASYNC JS]
+
+Preview the app via this link --->
+https://user-images.githubusercontent.com/73433189/115226099-c1e7c600-a106-11eb-8e7c-65132631d93e.mp4
