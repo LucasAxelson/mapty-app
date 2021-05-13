@@ -55,17 +55,18 @@ class Cycling extends Workout {
 
 ///////////////////////////////
 // APPLICATION ARCHITECTURE
-const form = document.querySelector('.form');
-const containerWorkouts = document.querySelector('.workouts');
-const inputType = document.querySelector('.form__input--type');
-const inputDistance = document.querySelector('.form__input--distance');
-const inputDuration = document.querySelector('.form__input--duration');
-const inputCadence = document.querySelector('.form__input--cadence');
-const inputElevation = document.querySelector('.form__input--elevation');
-const btnClear = document.querySelector(`.btn__clearAll`);
-const btnPositive = document.querySelector(`.btn--positive`);
-const btnNegative = document.querySelector(`.btn--negative`);
-const alertMessage = document.querySelector(`.alert--deletion`);
+
+const form = $(`form`)
+const containerWorkouts = $(`workouts`)
+const inputType = $('form__input--type');
+const inputDistance = $('form__input--distance');
+const inputDuration = $('form__input--duration');
+const inputCadence = $('form__input--cadence');
+const inputElevation = $('form__input--elevation');
+const btnClear = $(`btn__clearAll`);
+const btnPositive = $(`btn--positive`);
+const btnNegative = $(`btn--negative`);
+const alertMessage = $(`alert--deletion`);
 
 class App {
   #map;
@@ -81,18 +82,18 @@ class App {
     // Get data from local storage
     this._getLocalStorage();
     // Add new Workout. Bind the class App`s keyword `this`
-    form.addEventListener(`submit`, this._newWorkout.bind(this));
+    form.on(`submit`, this._newWorkout.bind(this));
     // Swap between the inputs Elevation & Candence
-    inputType.addEventListener('change', this._toggleElevationField);
+    inputType.on('change', this._toggleElevationField);
     // Moves map to the selected marker`s position
-    containerWorkouts.addEventListener(`click`, this._moveToPopup.bind(this));
+    containerWorkouts.on(`click`, this._moveToPopup.bind(this));
     // Deletes Workout
-    const btnDelete = document.querySelectorAll('.workout__delete');
-    btnDelete.forEach(btn =>
-      btn.addEventListener(`click`, this._deleteWorkout.bind(this))
+    const btnDelete = $('workout__delete');
+    btnDelete.each(btn =>
+      btn.on(`click`, this._deleteWorkout.bind(this))
     );
     // Deletes all Workouts
-    btnClear.addEventListener(`click`, this._deleteAll.bind(this));
+    btnClear.on(`click`, this._deleteAll.bind(this));
   }
 
   // Gets User's Position
@@ -137,7 +138,7 @@ class App {
   // Reveals form
   _showForm(mapE) {
     this.#mapEvent = mapE;
-    form.classList.remove(`hidden`);
+    form.removeClass(`hidden`);
     inputDistance.focus();
   }
 
@@ -145,8 +146,8 @@ class App {
   _hideForm() {
     inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value =
       '';
-    form.style.display = `none`;
-    form.classList.add(`hidden`);
+    form.css("display", "none");
+    form.addClass(`hidden`);
     setTimeout(() => (form.style.display = `grid`), 1000);
   }
 
@@ -219,7 +220,7 @@ class App {
     let paragraph = alertMessage.children;
     paragraph[0].innerText = `Are you sure you want to delete all your workouts?`;
 
-    btnPositive.addEventListener(`click`, () => {
+    btnPositive.on(`click`, () => {
       this._clearAll();
     });
   }
@@ -248,7 +249,7 @@ class App {
     let paragraph = alertMessage.children;
     paragraph[0].innerText = `Are you sure you want to delete this workout?`;
 
-    btnPositive.addEventListener(`click`, () => {
+    btnPositive.on(`click`, () => {
       this.#workouts.splice(index, 1); // Delete workout
       this._setLocalStorage(); // Save deletion
       location.reload(); // Reload page
@@ -258,17 +259,17 @@ class App {
   // Render the delete workout alert
   _renderAlert() {
     // Add alert message and remove the clear all button
-    alertMessage.classList.add(`alert--deletion--active`);
-    btnClear.style.display = `none`;
+    alertMessage.addClass(`alert--deletion--active`);
+    btnClear.css(`display`, `none`);
     // If btn-Negative, remove the alert and add back the Clear All btn.
-    btnNegative.addEventListener(`click`, () => {
-      alertMessage.classList.remove(`alert--deletion--active`);
-      btnClear.style.display = `unset`;
+    btnNegative.on(`click`, () => {
+      alertMessage.removeClass(`alert--deletion--active`);
+      btnClear.css(`display`, `unset`);
       return false;
     });
-    btnPositive.addEventListener(`click`, () => {
-      alertMessage.classList.remove(`alert--deletion--active`);
-      btnClear.style.display = `unset`;
+    btnPositive.on(`click`, () => {
+      alertMessage.removeClass(`alert--deletion--active`);
+      btnClear.css(`display`,`unset`);
       return true;
     });
   }
@@ -343,7 +344,7 @@ class App {
           </li>
           `;
 
-    form.insertAdjacentHTML('afterend', html);
+    form.after(html);
   }
 
   // Drifts map over to the selected workout
