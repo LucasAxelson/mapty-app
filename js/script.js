@@ -55,6 +55,7 @@ class Cycling extends Workout {
 
 ///////////////////////////////
 // APPLICATION ARCHITECTURE
+
 const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
 const inputType = document.querySelector('.form__input--type');
@@ -135,7 +136,7 @@ class App {
   }
 
   // Reveals form
-  _showForm(mapE) {
+ _showForm(mapE) {
     this.#mapEvent = mapE;
     form.classList.remove(`hidden`);
     inputDistance.focus();
@@ -220,7 +221,7 @@ class App {
     paragraph[0].innerText = `Are you sure you want to delete all your workouts?`;
 
     btnPositive.addEventListener(`click`, () => {
-      this._clearAll();
+        this._clearAll();
     });
   }
 
@@ -343,7 +344,7 @@ class App {
           </li>
           `;
 
-    form.insertAdjacentHTML('afterend', html);
+          form.insertAdjacentHTML('afterend', html);
   }
 
   // Drifts map over to the selected workout
