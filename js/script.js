@@ -342,7 +342,7 @@ class App {
               <span class="workout__unit">m</span>
             </div>
           </li>
-          `;z
+          `;
 
           form.insertAdjacentHTML('afterend', html);
   }
